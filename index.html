@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narradores Digitais — Guia do Estúdio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #001342;
+    --navy-2: #0B2059;
+    --cream: #F7F1E3;
+    --white: #FFFFFF;
+    --gold: #E2A731;
+    --gold-dark: #B4831F;
+    --blue: #6086C3;
+    --red: #C1443C;
+    --line: rgba(247,241,227,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--navy);
+    color: var(--cream);
+    font-family:'Nunito', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:'Anton', sans-serif; letter-spacing:0.5px; text-transform:uppercase;}
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color: var(--gold);
+  }
+  .wrap{ max-width:1000px; margin:0 auto; padding:0 24px;}
+
+  /* ===== BRAND HEADER (white) ===== */
+  .brand-header{
+    background: var(--white);
+    padding:14px 24px;
+    display:flex; align-items:center; justify-content:center; gap:12px;
+    border-bottom: 3px solid var(--gold);
+  }
+  .brand-header img{ height:40px; width:auto; display:block; }
+  .brand-header .divider{ width:1px; height:28px; background: rgba(0,19,66,0.15); }
+  .brand-header .name-eyebrow{ font-size:11px; color: var(--blue); font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  .brand-header .name-main{ font-family:'Anton', sans-serif; font-size:17px; color: var(--navy); letter-spacing:0.5px; text-transform:uppercase; }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    padding:100px 24px 140px;
+    text-align:center;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(232,163,61,0.15), transparent 60%),
+      var(--navy);
+    overflow:hidden;
+  }
+  .clapper{
+    width:150px; margin:0 auto 32px;
+    animation: clap 3.5s ease-in-out infinite;
+    transform-origin: 8% 100%;
+  }
+  @keyframes clap{
+    0%, 40%, 100% { transform: rotate(0deg); }
+    5% { transform: rotate(-18deg); }
+    10% { transform: rotate(0deg); }
+  }
+  .hero .eyebrow{ margin-bottom:14px; display:block;}
+  .hero h1{
+    font-size: clamp(38px, 7vw, 68px);
+    line-height:1.05;
+    color: var(--cream);
+  }
+  .hero h1 span{ color: var(--gold);}
+  .hero p{
+    max-width:520px; margin:22px auto 0;
+    color: rgba(247,241,227,0.75);
+    font-size:17px;
+  }
+  .hero .stamp{
+    display:inline-block; margin-top:34px;
+    font-family:'Space Mono', monospace;
+    font-size:13px; letter-spacing:1.5px;
+    color: var(--navy);
+    background: var(--gold);
+    padding:10px 22px;
+    border-radius:3px;
+    text-transform:uppercase;
+    box-shadow: 4px 4px 0 var(--gold-dark);
+  }
+
+  .filmstrip{
+    height:26px;
+    background: repeating-linear-gradient(90deg, var(--navy-2) 0 18px, transparent 18px 20px);
+    position:relative;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .filmstrip::before{
+    content:"";
+    position:absolute; top:0; bottom:0;
+    width:100%;
+    background-image: radial-gradient(circle, var(--navy) 4px, transparent 4.5px);
+    background-size: 26px 26px;
+    background-position: 9px 6px;
+  }
+
+  /* ===== NAV ===== */
+  .scene-nav{
+    position: sticky; top:0; z-index:50;
+    background: rgba(23,31,43,0.96);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .scene-nav .wrap{
+    display:flex; gap:4px;
+    overflow-x:auto;
+    padding:14px 24px;
+    scrollbar-width:none;
+  }
+  .scene-nav .wrap::-webkit-scrollbar{ display:none;}
+  .scene-tab{
+    flex:0 0 auto;
+    font-family:'Space Mono', monospace;
+    font-size:12.5px;
+    color: rgba(247,241,227,0.55);
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:9px 16px;
+    text-decoration:none;
+    white-space:nowrap;
+    transition: all .2s ease;
+  }
+  .scene-tab:hover{ color: var(--cream); border-color: var(--gold);}
+  .scene-tab.active{
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+    font-weight:700;
+  }
+
+  /* ===== SCENES ===== */
+  .scene{
+    padding:80px 24px;
+    border-bottom:1px solid var(--line);
+  }
+  .scene:nth-child(odd){ background: var(--navy-2); }
+  .scene-label{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:6px;
+  }
+  .scene-num{
+    font-family:'Anton', sans-serif;
+    font-size:15px;
+    color: var(--gold);
+  }
+  .scene h2{ font-size: clamp(26px, 4vw, 38px); color: var(--cream); margin-bottom:10px;}
+  .scene > .wrap > p.desc{
+    max-width:640px;
+    color: rgba(247,241,227,0.7);
+    margin-bottom:36px;
+  }
+
+  .video-frame{
+    position:relative;
+    background:#0D1219;
+    border:1px solid var(--line);
+    border-radius:8px;
+    aspect-ratio:16/9;
+    max-width:720px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:44px;
+    overflow:hidden;
+  }
+  .video-frame::before{
+    content:"";
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 4px);
+  }
+  .play-btn{
+    width:64px; height:64px; border-radius:50%;
+    background: rgba(232,163,61,0.15);
+    border:1.5px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition: transform .2s ease;
+    z-index:1;
+  }
+  .play-btn:hover{ transform: scale(1.08); }
+  .play-btn svg{ width:22px; height:22px; fill:var(--gold); margin-left:3px;}
+  .video-label{
+    position:absolute; bottom:14px; left:16px;
+    font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:1px;
+    color: rgba(247,241,227,0.45);
+    text-transform:uppercase;
+  }
+  .video-note{
+    position:absolute; top:14px; right:16px;
+    font-family:'Space Mono', monospace;
+    font-size:10.5px; letter-spacing:0.5px;
+    color: rgba(247,241,227,0.35);
+    text-transform:uppercase;
+  }
+
+  .callsheet-title{
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:2px; text-transform:uppercase;
+    color: var(--blue);
+    margin-bottom:16px;
+    display:block;
+  }
+  .faq{
+    max-width:720px;
+    border-top:1px solid var(--line);
+  }
+  .faq-item{ border-bottom:1px solid var(--line); }
+  .faq-q{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+    padding:16px 4px;
+    cursor:pointer;
+    font-weight:700;
+    color: var(--cream);
+    font-size:15px;
+  }
+  .faq-q .icon{
+    flex:0 0 auto;
+    width:26px; height:26px; border-radius:50%;
+    background: rgba(232,163,61,0.12);
+    border:1px solid rgba(232,163,61,0.4);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--gold);
+    font-family:'Space Mono', monospace;
+    font-size:14px;
+    transition: transform .25s ease;
+  }
+  .faq-item.open .faq-q .icon{ transform: rotate(45deg); }
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition: max-height .3s ease, padding .3s ease;
+    color: rgba(247,241,227,0.7);
+    font-size:14.5px;
+  }
+  .faq-item.open .faq-a{ max-height:220px; padding-bottom:18px;}
+  .faq-a .watch{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:10px;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    color: var(--gold);
+    text-decoration:none;
+    border-bottom:1px dotted var(--gold);
+    padding-bottom:2px;
+  }
+  .note-box{
+    max-width:640px;
+    background: rgba(193,68,60,0.1);
+    border:1px solid rgba(193,68,60,0.35);
+    border-radius:8px;
+    padding:14px 18px;
+    font-size:14px;
+    color: rgba(247,241,227,0.85);
+    margin-bottom:36px;
+  }
+  .note-box strong{ color: var(--red); }
+
+  /* ===== ASSISTANT ===== */
+  .assist-btn{
+    position:fixed; right:22px; bottom:22px; z-index:100;
+    background: var(--red);
+    color: var(--cream);
+    border:none;
+    border-radius:999px;
+    padding:15px 22px;
+    font-family:'Nunito', sans-serif;
+    font-weight:800;
+    font-size:14.5px;
+    display:flex; align-items:center; gap:10px;
+    cursor:pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    transition: transform .2s ease;
+  }
+  .assist-btn:hover{ transform: translateY(-2px); }
+  .assist-btn .dot{
+    width:9px; height:9px; border-radius:50%;
+    background: var(--cream);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.3; } }
+
+  .assist-panel{
+    position:fixed; right:22px; bottom:90px; z-index:100;
+    width:340px; max-width:calc(100vw - 44px);
+    background: var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    display:none;
+    flex-direction:column;
+    max-height:480px;
+  }
+  .assist-panel.open{ display:flex; }
+  .assist-head{
+    padding:16px 18px;
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .assist-head strong{ font-family:'Anton', sans-serif; font-size:16px; text-transform:uppercase; color:var(--gold); letter-spacing:0.5px;}
+  .assist-head button{
+    background:none; border:none; color: rgba(247,241,227,0.5); font-size:20px; cursor:pointer; line-height:1;
+  }
+  .assist-body{ padding:14px 18px; overflow-y:auto; flex:1;}
+  .assist-input{
+    width:100%;
+    background: var(--navy);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:11px 14px;
+    color: var(--cream);
+    font-family:'Nunito', sans-serif;
+    font-size:14px;
+    margin-bottom:14px;
+  }
+  .assist-input:focus{ outline:none; border-color: var(--gold); }
+  .assist-hint{ font-size:12.5px; color: rgba(247,241,227,0.4); margin-bottom:14px; }
+  .assist-result{
+    background: rgba(232,163,61,0.08);
+    border:1px solid rgba(232,163,61,0.3);
+    border-radius:8px;
+    padding:14px;
+    margin-bottom:10px;
+  }
+  .assist-result .tag{
+    font-family:'Space Mono', monospace;
+    font-size:10.5px; letter-spacing:1px; text-transform:uppercase;
+    color: var(--gold); margin-bottom:6px; display:block;
+  }
+  .assist-result p{ font-size:13.5px; color: var(--cream); margin-bottom:8px;}
+  .assist-empty{ text-align:center; padding:20px 10px; color: rgba(247,241,227,0.4); font-size:13.5px; }
+
+  footer{
+    padding:40px 24px; text-align:center;
+    font-family:'Space Mono', monospace;
+    font-size:12px; letter-spacing:1px;
+    color: rgba(247,241,227,0.35);
+  }
+
+  /* ===== ADMIN ===== */
+  .gear-btn{
+    position:fixed; left:22px; bottom:22px; z-index:100;
+    width:44px; height:44px; border-radius:50%;
+    background: var(--navy-2);
+    border:1px solid var(--line);
+    color: rgba(247,241,227,0.4);
+    font-size:18px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition: all .2s ease;
+  }
+  .gear-btn:hover{ color: var(--gold); border-color: var(--gold); }
+
+  .modal-overlay{
+    position:fixed; inset:0; z-index:200;
+    background: rgba(0,0,0,0.6);
+    display:none; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal-box{
+    background: var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:28px;
+    width:100%; max-width:360px;
+  }
+  .modal-box h3{ font-size:16px; color:var(--gold); margin-bottom:14px; }
+  .modal-box input[type=password]{
+    width:100%;
+    background: var(--navy);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:11px 14px;
+    color: var(--cream);
+    font-family:'Nunito', sans-serif;
+    font-size:14px;
+    margin-bottom:14px;
+  }
+  .modal-box .row{ display:flex; gap:10px; }
+  .btn-primary, .btn-secondary{
+    flex:1;
+    padding:10px 16px;
+    border-radius:8px;
+    border:none;
+    font-family:'Nunito', sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    cursor:pointer;
+  }
+  .btn-primary{ background: var(--gold); color: var(--navy); }
+  .btn-secondary{ background: transparent; color: rgba(247,241,227,0.6); border:1px solid var(--line); }
+  .modal-error{ font-size:12.5px; color: var(--red); margin-bottom:10px; display:none; }
+
+  .admin-drawer{
+    position:fixed; top:0; right:0; bottom:0; z-index:150;
+    width:420px; max-width:100vw;
+    background: var(--navy-2);
+    border-left:1px solid var(--line);
+    transform: translateX(100%);
+    transition: transform .25s ease;
+    overflow-y:auto;
+    padding:24px;
+  }
+  .admin-drawer.open{ transform: translateX(0); }
+  .admin-drawer h3{ font-size:18px; color:var(--gold); margin-bottom:4px; }
+  .admin-drawer .sub{ font-size:12.5px; color: rgba(247,241,227,0.45); margin-bottom:22px; }
+  .admin-field{
+    background: var(--navy);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .admin-field label{
+    display:block; font-family:'Space Mono', monospace; font-size:11px;
+    letter-spacing:1px; text-transform:uppercase; color: var(--blue); margin-bottom:8px;
+  }
+  .admin-field input, .admin-field textarea{
+    width:100%;
+    background: var(--navy-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:9px 11px;
+    color: var(--cream);
+    font-family:'Nunito', sans-serif;
+    font-size:13px;
+    margin-bottom:8px;
+    resize:vertical;
+  }
+  .admin-field textarea{ min-height:60px; }
+  .admin-field .save-btn{
+    background: var(--gold); color: var(--navy);
+    border:none; border-radius:6px;
+    padding:7px 14px; font-weight:700; font-size:12.5px;
+    cursor:pointer;
+  }
+  .admin-field .saved-tag{
+    font-size:11.5px; color: #8FCB9E; margin-left:8px; opacity:0; transition:opacity .3s ease;
+  }
+  .admin-drawer .close-drawer{
+    position:absolute; top:20px; right:20px;
+    background:none; border:none; color: rgba(247,241,227,0.5); font-size:22px; cursor:pointer;
+  }
+  .sync-status{
+    font-size:11.5px; padding:8px 12px; border-radius:6px; margin-bottom:16px;
+  }
+  .sync-status.online{ background: rgba(96,134,195,0.15); color: var(--blue); }
+  .sync-status.offline{ background: rgba(193,68,60,0.15); color: var(--red); }
+
+  @media (max-width: 640px){
+    .hero{ padding:70px 20px 100px; }
+    .scene{ padding:60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="brand-header">
+    <img src="data:image/png;base64,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" alt="Escola São Domingos">
+    <span class="divider"></span>
+    <span>
+      <span class="name-eyebrow" style="display:block">Escola</span>
+      <span class="name-main">São Domingos</span>
+    </span>
+  </header>
+
+  <section class="hero">
+    <svg class="clapper" viewBox="0 0 150 110" fill="none">
+      <rect x="5" y="35" width="140" height="70" rx="4" fill="#0B2059" stroke="#E2A731" stroke-width="2"/>
+      <rect x="5" y="8" width="140" height="24" rx="3" fill="#E2A731" transform-origin="12 32"/>
+      <g stroke="#001342" stroke-width="6">
+        <line x1="20" y1="8" x2="35" y2="32"/>
+        <line x1="50" y1="8" x2="65" y2="32"/>
+        <line x1="80" y1="8" x2="95" y2="32"/>
+        <line x1="110" y1="8" x2="125" y2="32"/>
+      </g>
+      <text x="75" y="72" text-anchor="middle" font-family="Space Mono" font-size="13" fill="#E2A731">CENA 01</text>
+      <text x="75" y="90" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#F7F1E3" opacity="0.6">AÇÃO!</text>
+    </svg>
+    <span class="eyebrow">5º anos · Escola São Domingos</span>
+    <h1>Narradores <span>Digitais</span></h1>
+    <p>O guia do nosso estúdio de cinema: aqui você aprende, passo a passo, como transformar o livro do seu grupo em um filme animado com a ajuda da tecnologia.</p>
+    <a href="#roteiro" class="stamp">Começar a produção ▸</a>
+  </section>
+
+  <div class="filmstrip"></div>
+
+  <nav class="scene-nav">
+    <div class="wrap">
+      <a href="#roteiro" class="scene-tab active">01 · Roteiro</a>
+      <a href="#chatgpt" class="scene-tab">02 · Personagens/Cenas</a>
+      <a href="#flow-personagens" class="scene-tab">03 · Flow: Personagens</a>
+      <a href="#flow-cenas" class="scene-tab">04 · Flow: Cenas</a>
+      <a href="#flow-animacao" class="scene-tab">05 · Flow: Animação</a>
+      <a href="#poster" class="scene-tab">06 · Pôster</a>
+      <a href="#onedrive" class="scene-tab">07 · OneDrive</a>
+      <a href="#capcut" class="scene-tab">08 · CapCut</a>
+      <a href="#canva" class="scene-tab">09 · Canva</a>
+    </div>
+  </nav>
+
+  <!-- 01 ROTEIRO -->
+  <section class="scene" id="roteiro" data-scene="roteiro">
+    <div class="wrap">
+      <div class="scene-label"><span class="scene-num">CENA 01</span></div>
+      <h2>Roteiro</h2>
+      <p class="desc" id="desc-roteiro">Todo filme começa no papel. O vídeo mostra o preenchimento completo do documento no Word: nome dos personagens, história, cenário e todos os outros campos.</p>
+
+      <div class="video-frame" id="vf-roteiro">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Vídeo: preenchendo o roteiro no Word</span>
+      </div>
+
+      <span class="callsheet-title">Dúvidas desta cena</span>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q"><span>Preciso preencher todos os campos do documento?</span><span class="icon">+</span></div>
+          <div class="faq-a">Sim, todos são importantes — inclusive os que parecem pequenos, porque o ChatGPT vai usar tudo isso na próxima cena.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Posso inventar personagens que não existem no livro?</span><span class="icon">+</span></div>
+          <div class="faq-a">Pode, desde que combine com a história e o grupo esteja de acordo. O importante é manter coerência com o livro escolhido.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>E se meu grupo não souber direito o cenário?</span><span class="icon">+</span></div>
+          <div class="faq-a">Voltem ao livro e ao mapa mental feito na biblioteca — o cenário geralmente já está descrito lá.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Posso escrever algo errado e arrumar depois?</span><span class="icon">+</span></div>
+          <div class="faq-a">Sim, é só um documento de Word. Vocês podem revisar e corrigir antes de entregar para o professor validar.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Quem preenche o nome dos personagens?</span><span class="icon">+</span></div>
+          <div class="faq-a">O grupo todo decide junto — é importante todo mundo concordar, porque esse nome vai aparecer em todas as próximas etapas.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 CHATGPT -->
+  <section class="scene" id="chatgpt" data-scene="chatgpt">
+    <div class="wrap">
+      <div class="scene-label"><span class="scene-num">CENA 02</span></div>
+      <h2>Personagens e Cenas</h2>
+      <p class="desc" id="desc-chatgpt">O vídeo mostra como abrir o prompt base (que fica no gerenciador de arquivos), colar no ChatGPT, e depois colar o roteiro do grupo — e como o resultado aparece na tela.</p>
+
+      <div class="video-frame" id="vf-chatgpt">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Vídeo: usando o prompt no ChatGPT</span>
+      </div>
+
+      <span class="callsheet-title">Dúvidas desta cena</span>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q"><span>Onde encontro o prompt para colar no ChatGPT?</span><span class="icon">+</span></div>
+          <div class="faq-a">Ele fica salvo numa pasta própria no gerenciador de arquivos, junto com os outros prompts do projeto.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Preciso colar o prompt inteiro antes do roteiro?</span><span class="icon">+</span></div>
+          <div class="faq-a">Sim, primeiro cole o prompt completo, espere o ChatGPT confirmar, e só depois cole o roteiro do grupo.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>E se o ChatGPT criar menos de 8 cenas?</span><span class="icon">+</span></div>
+          <div class="faq-a">Pode pedir para ele completar até 8 ou 10 cenas, lembrando de manter a mesma história e os mesmos personagens.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Posso pedir para o ChatGPT mudar algo que não gostei?</span><span class="icon">+</span></div>
+          <div class="faq-a">Sim! Só peça o ajuste específico — ele consegue reescrever uma cena ou um personagem sem refazer tudo.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>O que eu faço com o texto que o ChatGPT gerar?</span><span class="icon">+</span></div>
+          <div class="faq-a">Guarde essa conversa aberta — vocês vão usar as descrições dos personagens e das cenas nas próximas etapas, dentro do Google Flow.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 FLOW PERSONAGENS -->
+  <section class="scene" id="flow-personagens" data-scene="flow-personagens">
+    <div class="wrap">
+      <div class="scene-label"><span class="scene-num">CENA 03</span></div>
+      <h2>Filmagem — Personagens (Google Flow)</h2>
+      <p class="desc" id="desc-flow-personagens">O vídeo mostra como criar os personagens colando o prompt do ChatGPT no Google Flow, e como nomear cada personagem depois de criado, para facilitar a organização do grupo.</p>
+
+      <div class="video-frame" id="vf-flow-personagens">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Vídeo: criando os personagens no Flow</span>
+      </div>
+
+      <span class="callsheet-title">Dúvidas desta cena</span>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q"><span>Como colo o prompt do ChatGPT no Flow?</span><span class="icon">+</span></div>
+          <div class="faq-a">Copie a descrição do personagem gerada pelo ChatGPT e cole direto no campo de criação do Flow, sem alterar o texto.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Como devo nomear os personagens depois de criados?</span><span class="icon">+</span></div>
+          <div class="faq-a">Use um nome simples e igual ao do roteiro (ex: "João"), pra facilitar achar ele rápido nas próximas cenas.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Posso gerar o personagem de novo se não gostar?</span><span class="icon">+</span></div>
+          <div class="faq-a">Pode, mas use com cuidado — cada tentativa gasta um crédito do grupo.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Preciso salvar a imagem do personagem em algum lugar?</span><span class="icon">+</span></div>
+          <div class="faq-a">Sim! Vocês vão precisar dela de novo na Cena 04, para manter a consistência visual nas cenas do filme.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 FLOW CENAS -->
+  <section class="scene" id="flow-cenas" data-scene="flow-cenas">
+    <div class="wrap">
+      <div class="scene-label"><span class="scene-num">CENA 04</span></div>
+      <h2>Filmagem — Cenas (Google Flow)</h2>
+      <p class="desc" id="desc-flow-cenas">O vídeo mostra como criar cada cena a partir do prompt do ChatGPT, sempre adicionando também os personagens já criados, para não perder a consistência visual deles.</p>
+
+      <div class="video-frame" id="vf-flow-cenas">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Vídeo: criando as cenas no Flow</span>
+      </div>
+
+      <span class="callsheet-title">Dúvidas desta cena</span>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q"><span>Preciso colocar a imagem do personagem em toda cena?</span><span class="icon">+</span></div>
+          <div class="faq-a">Sim, sempre. É isso que garante que o personagem apareça igual do início ao fim do filme.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>E se eu esquecer de colocar o personagem na cena?</span><span class="icon">+</span></div>
+          <div class="faq-a">O Flow pode gerar o personagem com uma aparência diferente. Se isso acontecer, refaçam a cena colando a imagem certa.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Posso mudar a ordem das cenas?</span><span class="icon">+</span></div>
+          <div class="faq-a">Não é recomendado — as cenas seguem a ordem do roteiro criado pelo grupo, pra história fazer sentido.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Quantas cenas a gente realmente precisa criar?</span><span class="icon">+</span></div>
+          <div class="faq-a">Entre 8 e 10 cenas, do jeito que o ChatGPT já organizou lá na Cena 02.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 FLOW ANIMACAO -->
+  <section class="scene" id="flow-animacao" data-scene="flow-animacao">
+    <div class="wrap">
+      <div class="scene-label"><span class="scene-num">CENA 05</span></div>
+      <h2>Filmagem — Animação (Google Flow)</h2>
+      <p class="desc" id="desc-flow-animacao">O vídeo mostra como, a partir das imagens das cenas já criadas, transformá-las em vídeo animado: clicando nos três pontinhos e depois em "Animar", inserindo as falas do personagem.</p>
+
+      <div class="video-frame" id="vf-flow-animacao">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Vídeo: animando as cenas no Flow</span>
+      </div>
+
+      <div class="note-box"><strong>Atenção:</strong> sempre escreva "SEM MÚSICA" no final do prompt de animação, para o áudio final ficar sem trilha sonora automática.</div>
+
+      <span class="callsheet-title">Dúvidas desta cena</span>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q"><span>Onde clico para animar a imagem?</span><span class="icon">+</span></div>
+          <div class="faq-a">Clique nos três pontinhos da cena criada e depois na opção "Animar".</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Onde coloco a fala do personagem?</span><span class="icon">+</span></div>
+          <div class="faq-a">No mesmo campo onde você escreve o comando de animação — inclua a fala ali antes de gerar.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Por que sempre escrevo "SEM MÚSICA"?</span><span class="icon">+</span></div>
+          <div class="faq-a">Porque, se não escrever, o Flow pode adicionar uma trilha sonora automática que não combina com o restante do filme.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Esqueci de colocar "sem música", o que acontece?</span><span class="icon">+</span></div>
+          <div class="faq-a">O clipe pode sair com música de fundo. Se isso acontecer, gerem a animação de novo com a instrução certa.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Posso animar a mesma cena mais de uma vez?</span><span class="icon">+</span></div>
+          <div class="faq-a">Pode, mas cada tentativa gasta crédito do grupo — use com atenção.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 POSTER -->
+  <section class="scene" id="poster" data-scene="poster">
+    <div class="wrap">
+      <div class="scene-label"><span class="scene-num">CENA 06</span></div>
+      <h2>Pôster do Filme</h2>
+      <p class="desc" id="desc-poster">O vídeo mostra como pegar o prompt do pôster (também salvo na pasta de prompts do gerenciador de arquivos), levar ao ChatGPT, pegar o resultado e usar no Google Flow para gerar a imagem final.</p>
+
+      <div class="video-frame" id="vf-poster">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Vídeo: criando o pôster do filme</span>
+        <span class="video-note">com cortes</span>
+      </div>
+
+      <span class="callsheet-title">Dúvidas desta cena</span>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q"><span>Onde está o prompt do pôster?</span><span class="icon">+</span></div>
+          <div class="faq-a">Na mesma pasta de prompts do gerenciador de arquivos, junto com o prompt usado na Cena 02.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Preciso mudar algo no prompt antes de usar?</span><span class="icon">+</span></div>
+          <div class="faq-a">Não, ele já está pronto para uso — só copiar e colar no ChatGPT.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>O pôster também vai para o Google Flow?</span><span class="icon">+</span></div>
+          <div class="faq-a">Sim. O ChatGPT gera o texto do prompt do pôster, e esse texto é usado no Flow para criar a imagem final.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Por que o vídeo desta cena vai ter cortes?</span><span class="icon">+</span></div>
+          <div class="faq-a">Só para não ficar longo — algumas partes repetitivas foram cortadas na edição, mas o passo a passo continua completo.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 ONEDRIVE -->
+  <section class="scene" id="onedrive" data-scene="onedrive">
+    <div class="wrap">
+      <div class="scene-label"><span class="scene-num">CENA 07</span></div>
+      <h2>Salvamento no OneDrive</h2>
+      <p class="desc" id="desc-onedrive">O vídeo mostra a criação de uma pasta no OneDrive para o projeto, e como pegar os vídeos baixados do Google Flow (que ficam salvos no desktop) e organizá-los dentro dessa pasta.</p>
+
+      <div class="video-frame" id="vf-onedrive">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Vídeo: organizando os vídeos no OneDrive</span>
+      </div>
+
+      <span class="callsheet-title">Dúvidas desta cena</span>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q"><span>Onde fica a pasta do projeto?</span><span class="icon">+</span></div>
+          <div class="faq-a">Dentro do OneDrive, numa pasta criada especialmente para o grupo do projeto.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Os vídeos do Flow vão direto para o OneDrive?</span><span class="icon">+</span></div>
+          <div class="faq-a">Não, eles são baixados primeiro no desktop do computador. Depois é preciso movê-los manualmente para a pasta do OneDrive.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Preciso subir os vídeos sozinho ou o professor ajuda?</span><span class="icon">+</span></div>
+          <div class="faq-a">O professor acompanha essa etapa junto com o grupo, principalmente na primeira vez.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Perco o vídeo se não salvar no OneDrive?</span><span class="icon">+</span></div>
+          <div class="faq-a">Ele continua no desktop do computador, mas o OneDrive garante que o vídeo fique seguro e acessível para a montagem final.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 CAPCUT -->
+  <section class="scene" id="capcut" data-scene="capcut">
+    <div class="wrap">
+      <div class="scene-label"><span class="scene-num">CENA 08</span></div>
+      <h2>CapCut — Montagem do Vídeo</h2>
+      <p class="desc" id="desc-capcut">O vídeo mostra, de forma rápida e dinâmica, como juntar todos os clipes animados em um único vídeo final usando o CapCut.</p>
+
+      <div class="video-frame" id="vf-capcut">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Vídeo: montagem rápida no CapCut</span>
+      </div>
+
+      <div class="note-box"><strong>Aula dedicada:</strong> teremos uma aula focada só nessa etapa. Este vídeo é um apoio extra para quem quiser adiantar ou revisar por conta própria.</div>
+
+      <span class="callsheet-title">Dúvidas desta cena</span>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q"><span>Precisamos saber usar o CapCut sozinhos?</span><span class="icon">+</span></div>
+          <div class="faq-a">Não é obrigatório saber antes — a aula dedicada vai ensinar tudo passo a passo.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Esse vídeo aqui já é suficiente ou preciso da aula?</span><span class="icon">+</span></div>
+          <div class="faq-a">O vídeo é só um apoio rápido. A aula dedicada é onde realmente vamos montar o vídeo juntos com calma.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Posso adiantar e montar em casa?</span><span class="icon">+</span></div>
+          <div class="faq-a">Pode sim, se quiser praticar antes, mas não é necessário — dá tudo certo dentro da aula.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 CANVA -->
+  <section class="scene" id="canva" data-scene="canva">
+    <div class="wrap">
+      <div class="scene-label"><span class="scene-num">CENA 09</span></div>
+      <h2>Canva — Montagem do Slide</h2>
+      <p class="desc" id="desc-canva">O vídeo mostra a montagem do slide de apresentação, que é simples e contém: capa (nome do livro, série, foto do livro e participantes), foto do mapa mental, pôster do mini filme, e o mini filme em si.</p>
+
+      <div class="video-frame" id="vf-canva">
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="video-label">Vídeo: montando o slide no Canva</span>
+      </div>
+
+      <div class="note-box"><strong>Aula dedicada:</strong> assim como o CapCut, teremos uma aula com foco exclusivo nesta montagem final.</div>
+
+      <span class="callsheet-title">Dúvidas desta cena</span>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q"><span>O que precisa ter na capa do slide?</span><span class="icon">+</span></div>
+          <div class="faq-a">Nome do livro, série, foto do livro e os nomes dos participantes do grupo.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Onde entra a foto do mapa mental?</span><span class="icon">+</span></div>
+          <div class="faq-a">Em um slide próprio, logo depois da capa — é a foto feita lá na etapa da biblioteca.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>O mini filme entra dentro do slide ou fica separado?</span><span class="icon">+</span></div>
+          <div class="faq-a">Ele entra inserido dentro do próprio slide do Canva, no momento da apresentação.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Onde entra o pôster que criamos?</span><span class="icon">+</span></div>
+          <div class="faq-a">Em um slide dedicado só a ele, entre o mapa mental e o mini filme.</div></div>
+        <div class="faq-item"><div class="faq-q"><span>Essa montagem é difícil?</span><span class="icon">+</span></div>
+          <div class="faq-a">Não, é bem simples — e como vai ter uma aula focada nisso, ninguém vai precisar fazer sozinho sem orientação.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Narradores Digitais · Projeto de Tecnologia · Escola São Domingos</footer>
+
+  <button class="assist-btn" onclick="toggleAssist()"><span class="dot"></span> Preciso de ajuda</button>
+
+  <div class="assist-panel" id="assistPanel">
+    <div class="assist-head">
+      <strong>Central de ajuda</strong>
+      <button onclick="toggleAssist()">×</button>
+    </div>
+    <div class="assist-body">
+      <input type="text" class="assist-input" id="assistInput" placeholder="Digite sua dúvida aqui..." oninput="searchFaq(this.value)">
+      <div class="assist-hint">Ex.: "sem música", "personagem mudou", "onde fica o prompt"</div>
+      <div id="assistResults"><div class="assist-empty">Digite sua dúvida acima para eu buscar a resposta certa 🎬</div></div>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <button class="gear-btn" onclick="openPasswordModal()" title="Área do professor" aria-label="Área do professor">⚙</button>
+
+  <div class="modal-overlay" id="passwordModal">
+    <div class="modal-box">
+      <h3>Área do professor</h3>
+      <div class="modal-error" id="passwordError">Senha incorreta. Tente novamente.</div>
+      <input type="password" id="passwordInput" placeholder="Digite a senha">
+      <div class="row">
+        <button class="btn-secondary" onclick="closePasswordModal()">Cancelar</button>
+        <button class="btn-primary" onclick="checkPassword()">Entrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-drawer" id="adminDrawer">
+    <button class="close-drawer" onclick="closeAdminDrawer()">×</button>
+    <h3>Painel do professor</h3>
+    <div class="sub">Edite a descrição e cole o link do vídeo de cada cena. As mudanças aparecem para todos os alunos.</div>
+    <div class="sync-status" id="syncStatus">Verificando conexão...</div>
+    <div id="adminFields"></div>
+  </div>
+
+  <!-- Firebase (compat SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => item.classList.toggle('open'));
+  });
+
+  const tabs = document.querySelectorAll('.scene-tab');
+  const scenes = document.querySelectorAll('.scene');
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const id = e.target.getAttribute('id');
+        tabs.forEach(t => t.classList.toggle('active', t.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  scenes.forEach(s => spy.observe(s));
+
+  function toggleAssist(){ document.getElementById('assistPanel').classList.toggle('open'); }
+
+  const faqData = [
+    { scene:'Cena 01 · Roteiro', q:'Preciso preencher todos os campos do documento?', a:'Sim, todos são importantes — inclusive os pequenos, porque o ChatGPT vai usar tudo na próxima cena.', keywords:['campos','preencher','documento','word'] },
+    { scene:'Cena 01 · Roteiro', q:'Posso inventar personagens que não existem no livro?', a:'Pode, desde que combine com a história e o grupo concorde.', keywords:['inventar','personagem novo','nao existe'] },
+    { scene:'Cena 01 · Roteiro', q:'Não sabemos direito o cenário', a:'Voltem ao livro e ao mapa mental da biblioteca — o cenário geralmente já está descrito lá.', keywords:['cenario','cenário','nao sei','onde acontece'] },
+    { scene:'Cena 02 · Personagens/Cenas', q:'Onde encontro o prompt para o ChatGPT?', a:'Ele fica salvo numa pasta própria no gerenciador de arquivos.', keywords:['prompt','onde fica','onde esta','gerenciador'] },
+    { scene:'Cena 02 · Personagens/Cenas', q:'O que fazer se o ChatGPT criar menos de 8 cenas?', a:'Peça para ele completar até 8 ou 10 cenas, mantendo a mesma história e personagens.', keywords:['menos cenas','poucas cenas','8 cenas','10 cenas'] },
+    { scene:'Cena 03 · Flow: Personagens', q:'Como nomeio os personagens no Flow?', a:'Use um nome simples e igual ao do roteiro, para achar rápido depois.', keywords:['nomear','nome do personagem','como chamar'] },
+    { scene:'Cena 03 · Flow: Personagens', q:'Preciso salvar a imagem do personagem?', a:'Sim, vocês vão usar essa imagem de novo na etapa de criação das cenas.', keywords:['salvar imagem','guardar personagem'] },
+    { scene:'Cena 04 · Flow: Cenas', q:'Meu personagem ficou diferente na cena', a:'Sempre cole a imagem do personagem junto com o prompt de cada cena, sem esquecer.', keywords:['personagem diferente','mudou','esqueci personagem'] },
+    { scene:'Cena 04 · Flow: Cenas', q:'Quantas cenas realmente precisamos criar?', a:'Entre 8 e 10 cenas, na mesma ordem organizada pelo ChatGPT.', keywords:['quantas cenas','numero de cenas'] },
+    { scene:'Cena 05 · Flow: Animação', q:'Por que sempre escrevo SEM MÚSICA?', a:'Porque sem essa instrução o Flow pode adicionar uma trilha sonora automática que não combina com o filme.', keywords:['sem musica','sem música','trilha sonora','musica automatica'] },
+    { scene:'Cena 05 · Flow: Animação', q:'Onde clico para animar a cena?', a:'Clique nos três pontinhos da cena e depois em "Animar".', keywords:['animar','tres pontinhos','três pontinhos','botao animar'] },
+    { scene:'Cena 06 · Pôster', q:'Onde está o prompt do pôster?', a:'Na mesma pasta de prompts do gerenciador de arquivos.', keywords:['prompt do poster','onde fica poster','prompt cartaz'] },
+    { scene:'Cena 07 · OneDrive', q:'Os vídeos vão direto pro OneDrive?', a:'Não, primeiro são baixados no desktop e depois movidos manualmente para a pasta do OneDrive.', keywords:['onedrive','desktop','baixar video','salvar video'] },
+    { scene:'Cena 08 · CapCut', q:'Precisamos saber CapCut sozinhos?', a:'Não, teremos uma aula dedicada só para isso.', keywords:['capcut','aula capcut','montagem video'] },
+    { scene:'Cena 09 · Canva', q:'O que tem que ter na capa do slide?', a:'Nome do livro, série, foto do livro e os participantes do grupo.', keywords:['capa','slide','canva','o que tem'] },
+    { scene:'Cena 09 · Canva', q:'Onde entra o mapa mental no slide?', a:'Em um slide próprio, logo após a capa.', keywords:['mapa mental','onde entra mapa'] },
+  ];
+
+  function searchFaq(term){
+    const box = document.getElementById('assistResults');
+    const clean = term.toLowerCase().trim();
+    if(!clean){ box.innerHTML = '<div class="assist-empty">Digite sua dúvida acima para eu buscar a resposta certa 🎬</div>'; return; }
+    const matches = faqData.filter(f =>
+      f.keywords.some(k => clean.includes(k) || k.includes(clean)) ||
+      f.q.toLowerCase().includes(clean)
+    );
+    if(matches.length === 0){
+      box.innerHTML = '<div class="assist-empty">Não encontrei nada parecido. Tenta descrever com outras palavras, ou chama o professor 🙋</div>';
+      return;
+    }
+    box.innerHTML = matches.slice(0,3).map(m => `
+      <div class="assist-result">
+        <span class="tag">${m.scene}</span>
+        <p><strong>${m.q}</strong><br>${m.a}</p>
+        <a class="watch" href="#">▸ assistir vídeo dessa cena</a>
+      </div>
+    `).join('');
+  }
+
+  /* =========================================================
+     PAINEL DO PROFESSOR + FIREBASE
+     =========================================================
+     1) Troque a senha padrão abaixo (ADMIN_PASSWORD).
+     2) Substitua firebaseConfig pelas credenciais do SEU projeto
+        Firebase (Firestore). Se você já usa Firebase no site do
+        casamento, pode reaproveitar o mesmo projeto e só criar
+        uma nova coleção chamada "reconto_cenas".
+     3) Sem Firebase configurado, o painel ainda funciona salvando
+        no localStorage do navegador (só não sincroniza entre
+        dispositivos diferentes).
+  ========================================================= */
+
+  const ADMIN_PASSWORD = "esd2026"; // troque aqui
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCRS2LODtjf5LZcBYVdnxjw7clTEmw8QvQ",
+    authDomain: "projeto-esd-ebb91.firebaseapp.com",
+    projectId: "projeto-esd-ebb91",
+    storageBucket: "projeto-esd-ebb91.firebasestorage.app",
+    messagingSenderId: "437951928480",
+    appId: "1:437951928480:web:1b353ed94c57b6a6de51c5"
+  };
+
+  const SCENE_LIST = [
+    { id: "roteiro", label: "Cena 01 · Roteiro" },
+    { id: "chatgpt", label: "Cena 02 · Personagens e Cenas" },
+    { id: "flow-personagens", label: "Cena 03 · Flow: Personagens" },
+    { id: "flow-cenas", label: "Cena 04 · Flow: Cenas" },
+    { id: "flow-animacao", label: "Cena 05 · Flow: Animação" },
+    { id: "poster", label: "Cena 06 · Pôster" },
+    { id: "onedrive", label: "Cena 07 · OneDrive" },
+    { id: "capcut", label: "Cena 08 · CapCut" },
+    { id: "canva", label: "Cena 09 · Canva" },
+  ];
+
+  let db = null;
+  let firebaseReady = false;
+
+  try {
+    if (firebaseConfig.apiKey !== "SUA_API_KEY") {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+      firebaseReady = true;
+    }
+  } catch (e) {
+    console.warn("Firebase não inicializado:", e);
+  }
+
+  function getLocalData(sceneId) {
+    try {
+      return JSON.parse(localStorage.getItem("cena_" + sceneId) || "null");
+    } catch (e) { return null; }
+  }
+
+  function setLocalData(sceneId, data) {
+    localStorage.setItem("cena_" + sceneId, JSON.stringify(data));
+  }
+
+  function youtubeId(url) {
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/);
+    return m ? m[1] : null;
+  }
+
+  function renderScene(sceneId, data) {
+    if (!data) return;
+    const descEl = document.getElementById("desc-" + sceneId);
+    const vfEl = document.getElementById("vf-" + sceneId);
+    if (descEl && data.desc) descEl.textContent = data.desc;
+    if (vfEl && data.videoUrl) {
+      const yid = youtubeId(data.videoUrl);
+      if (yid) {
+        vfEl.innerHTML = `<iframe width="100%" height="100%" style="position:absolute;inset:0;border:0"
+          src="https://www.youtube.com/embed/${yid}" allowfullscreen></iframe>`;
+      } else {
+        vfEl.innerHTML = `<a href="${data.videoUrl}" target="_blank" rel="noopener" style="z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--gold);text-decoration:none">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span style="font-family:'Space Mono',monospace;font-size:12px">Assistir vídeo ▸</span>
+        </a>`;
+      }
+    }
+  }
+
+  async function loadAllScenes() {
+    for (const s of SCENE_LIST) {
+      let data = getLocalData(s.id);
+      if (firebaseReady) {
+        try {
+          const doc = await db.collection("reconto_cenas").doc(s.id).get();
+          if (doc.exists) {
+            data = doc.data();
+            setLocalData(s.id, data);
+          }
+        } catch (e) { console.warn("Erro ao buscar", s.id, e); }
+      }
+      if (data) renderScene(s.id, data);
+    }
+    const statusEl = document.getElementById("syncStatus");
+    if (statusEl) {
+      if (firebaseReady) {
+        statusEl.textContent = "🟢 Conectado ao Firebase — mudanças sincronizam para todos os alunos.";
+        statusEl.className = "sync-status online";
+      } else {
+        statusEl.textContent = "🟡 Firebase não configurado — salvando apenas neste navegador.";
+        statusEl.className = "sync-status offline";
+      }
+    }
+  }
+
+  function buildAdminFields() {
+    const container = document.getElementById("adminFields");
+    container.innerHTML = SCENE_LIST.map(s => {
+      const data = getLocalData(s.id) || { desc: "", videoUrl: "" };
+      return `
+      <div class="admin-field">
+        <label>${s.label}</label>
+        <input type="text" id="admin-video-${s.id}" placeholder="Link do vídeo (YouTube, Drive, etc.)" value="${(data.videoUrl || '').replace(/"/g,'&quot;')}">
+        <textarea id="admin-desc-${s.id}" placeholder="Descrição da cena">${data.desc || ''}</textarea>
+        <button class="save-btn" onclick="saveScene('${s.id}')">Salvar</button>
+        <span class="saved-tag" id="saved-${s.id}">✓ Salvo</span>
+      </div>`;
+    }).join("");
+  }
+
+  async function saveScene(sceneId) {
+    const videoUrl = document.getElementById("admin-video-" + sceneId).value.trim();
+    const desc = document.getElementById("admin-desc-" + sceneId).value.trim();
+    const data = { desc, videoUrl };
+    setLocalData(sceneId, data);
+    renderScene(sceneId, data);
+    if (firebaseReady) {
+      try {
+        await db.collection("reconto_cenas").doc(sceneId).set(data, { merge: true });
+      } catch (e) { console.warn("Erro ao salvar no Firebase:", e); }
+    }
+    const tag = document.getElementById("saved-" + sceneId);
+    tag.style.opacity = 1;
+    setTimeout(() => { tag.style.opacity = 0; }, 1800);
+  }
+
+  function openPasswordModal() {
+    document.getElementById("passwordModal").classList.add("open");
+    document.getElementById("passwordError").style.display = "none";
+    document.getElementById("passwordInput").value = "";
+    document.getElementById("passwordInput").focus();
+  }
+  function closePasswordModal() {
+    document.getElementById("passwordModal").classList.remove("open");
+  }
+  function checkPassword() {
+    const val = document.getElementById("passwordInput").value;
+    if (val === ADMIN_PASSWORD) {
+      closePasswordModal();
+      buildAdminFields();
+      document.getElementById("adminDrawer").classList.add("open");
+    } else {
+      document.getElementById("passwordError").style.display = "block";
+    }
+  }
+  document.getElementById("passwordInput")?.addEventListener("keydown", e => {
+    if (e.key === "Enter") checkPassword();
+  });
+  function closeAdminDrawer() {
+    document.getElementById("adminDrawer").classList.remove("open");
+  }
+
+  loadAllScenes();
+</script>
+
+</body>
+</html>
